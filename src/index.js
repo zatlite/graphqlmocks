@@ -8,6 +8,7 @@ type Query {
 }
 
 type Data {
+    id(from: Int = 1): Int!
     firstName: String!
     middleInitial: String
     lastName: String!
@@ -24,9 +25,10 @@ type Data {
 
 const resolvers = {
     Query: {
-        data: (_, args) => (new Array(args.size)).fill({}),
+        data: (_, args) => getObjArray(args.size),
     },
     Data: {
+        id: (parent, args) => parent.id + args.from,
         firstName: () => lo.sample(names).name,
         middleInitial: () => randomString(1, 'C'),
         lastName: () => lo.sample(names).surname,
@@ -65,10 +67,14 @@ function randomString(len, an){
     return str;
 }
 
+function getObjArray(size) {
+    return (new Array(size)).fill({}).map((x, i) => { return { id: i } } );
+}
+
 function randObjArray(max, allowEmpty) {
   var min = allowEmpty ? 0 : 1
   var size = randInt(min, max)
-  return size === 0 ? [] : (new Array(size)).fill({})
+  return size === 0 ? [] : getObjArray(size)
 }
 
 function randInt(min, max) {
