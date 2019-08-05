@@ -8,5 +8,15 @@
     "graphql-yoga": "^1.18.1",
     "lodash": "^4.17.15"
   },
-  "build": {}
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "engines": {
+    "node": "12.5.0"
+  },
+  "now": {
+    "engines": {
+      "node": "12.5.0"
+    }
+  }
 }
