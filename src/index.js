@@ -148,8 +148,10 @@ function getText(length) {
 const server = new GraphQLServer({
     typeDefs,
     resolvers,
-})
-
+});
+const serverOptions = {
+    port: process.env.PORT || 4000
+}
 var names = [];
 
 axios.all([
@@ -158,10 +160,9 @@ axios.all([
 ])
 .then(axios.spread((aus, ger) => {
     names = [...aus.data, ...ger.data];
-    server.start(() => console.log('Server is running on http://localhost:4000'));
+    server.start(serverOptions, ({ port }) => console.log(`Server is running on port: ${port}`));
 }))
 .catch(() => {
     names = [{name: 'John', surname: 'Citizen'}, {name: 'Alan', surname: 'Turing'}];
-    server.start(() => console.log('Server is running on http://localhost:4000'));
+    server.start(serverOptions, ({ port }) => console.log(`Server is running on port: ${port}`));
 });
-
