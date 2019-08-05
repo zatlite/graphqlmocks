@@ -1,4 +1,5 @@
 {
     "name": "graphqlmocks",
-    "version": 2
+    "version": 2,
+    "build": ""
 }
